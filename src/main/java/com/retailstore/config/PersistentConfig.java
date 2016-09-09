@@ -22,7 +22,11 @@ public class PersistentConfig {
 	
 	 @Bean
 	  public DataSource dataSource() {
-	    return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
+	    return new EmbeddedDatabaseBuilder()
+	    		.setType(EmbeddedDatabaseType.H2)
+	    		.addScript("sql-scripts/create.sql")
+	    		.addScript("sql-scripts/insert-product.sql")
+	    		.build();
 	  }
 
 	  @Bean
@@ -35,6 +39,7 @@ public class PersistentConfig {
 	    HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 	    jpaVendorAdapter.setDatabase(Database.H2);
 	    jpaVendorAdapter.setGenerateDdl(true);
+	    jpaVendorAdapter.setShowSql(true);
 	    return jpaVendorAdapter;
 	  }
 
